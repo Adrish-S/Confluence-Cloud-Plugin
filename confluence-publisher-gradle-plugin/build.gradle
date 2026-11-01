@@ -1,0 +1,45 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '1.2.1'
+}
+
+group = 'io.github.adrish_s'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.vladsch.flexmark:flexmark-all:0.64.8'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+gradlePlugin {
+    website = 'https://github.com/Adrish-S/confluence-publisher-gradle-plugin'
+    vcsUrl = 'https://github.com/Adrish-S/confluence-publisher-gradle-plugin.git'
+
+    plugins {
+        confluencePublisher {
+            id = 'io.github.adrish_s.confluence-publisher'
+            displayName = 'Confluence Cloud Markdown Publisher'
+            description = 'Publishes local Markdown directory hierarchies to Confluence Cloud REST API v2.'
+            tags.set(['confluence', 'markdown', 'documentation', 'atlassian', 'cloud'])
+            implementationClass = 'io.github.adrish_s.confluence.ConfluencePublisherPlugin'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
